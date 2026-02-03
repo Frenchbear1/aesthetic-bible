@@ -1,7 +1,7 @@
 {
-  "name": "bible-app",
+  "name": "aesthetic-bible",
   "version": "0.1.0",
-  "description": "Bible app desktop shell",
+  "description": "Aesthetic Bible app desktop shell",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -17,8 +17,8 @@
     "png-to-ico": "^2.1.0"
   },
   "build": {
-    "appId": "com.frenchbear1.cleanenglishbible",
-    "productName": "Clean English Bible",
+    "appId": "com.frenchbear1.aestheticbible",
+    "productName": "Aesthetic Bible",
     "files": [
       "index.html",
       "styles.css",

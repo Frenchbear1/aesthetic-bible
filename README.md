@@ -1,4 +1,4 @@
-# Clean English Bible
+# Aesthetic Bible
 
 A lightweight desktop Bible reader built on Electron. Includes search, highlights, favorites, and a memorize workflow with a startup verse popup.
 

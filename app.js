@@ -1403,6 +1403,7 @@ function updateStartupOverlayContent() {
   if (!state.data) {
     elements.startupReference.textContent = "Loading…";
     elements.startupText.textContent = "Preparing your verse.";
+    scheduleStartupResize();
     return;
   }
   const activeId = state.startupActiveMemoryId || state.startupMemoryId;
@@ -1410,10 +1411,37 @@ function updateStartupOverlayContent() {
   if (!entry) {
     elements.startupReference.textContent = "No verse selected";
     elements.startupText.textContent = "Choose a verse or group in the Memorize tab.";
+    scheduleStartupResize();
     return;
   }
   elements.startupReference.textContent = formatMemorizeLabel(entry.verseIds);
   elements.startupText.textContent = buildMemorizeText(entry.verseIds) || "Select a verse to memorize.";
+  scheduleStartupResize();
+}
+
+let startupResizeTimer = null;
+function scheduleStartupResize() {
+  if (!startupLocked) return;
+  if (!window.appShell || typeof window.appShell.setStartupMode !== "function") return;
+  if (startupResizeTimer) {
+    clearTimeout(startupResizeTimer);
+  }
+  startupResizeTimer = setTimeout(() => {
+    resizeStartupWindow();
+  }, 50);
+}
+
+function resizeStartupWindow() {
+  const card = elements.startupCard;
+  if (!card) {
+    window.appShell.setStartupMode("compact");
+    return;
+  }
+  const rect = card.getBoundingClientRect();
+  const padding = 64;
+  const width = Math.ceil(rect.width + padding);
+  const height = Math.ceil(rect.height + padding);
+  window.appShell.setStartupMode({ mode: "compact", width, height });
 }
 
 function showStartupOverlay() {
@@ -1429,16 +1457,7 @@ function showStartupOverlay() {
   updateStartupOverlayContent();
   if (window.appShell && typeof window.appShell.setStartupMode === "function") {
     requestAnimationFrame(() => {
-      const card = elements.startupCard;
-      if (!card) {
-        window.appShell.setStartupMode("compact");
-        return;
-      }
-      const rect = card.getBoundingClientRect();
-      const padding = 48;
-      const width = Math.ceil(rect.width + padding);
-      const height = Math.ceil(rect.height + padding);
-      window.appShell.setStartupMode({ mode: "compact", width, height });
+      resizeStartupWindow();
     });
   }
 }
