@@ -912,31 +912,6 @@ body::-webkit-scrollbar {
   padding: 4px 10px;
 }
 
-.auth-google {
-  width: 100%;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-}
-
-.auth-divider {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: var(--muted);
-  font-size: 12px;
-  font-family: "Optima", "Avenir Next", "Segoe UI", sans-serif;
-}
-
-.auth-divider::before,
-.auth-divider::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-}
-
 .auth-field {
   display: grid;
   gap: 6px;

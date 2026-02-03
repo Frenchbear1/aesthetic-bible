@@ -1,8 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
 import {
   getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -241,7 +239,6 @@ const elements = {
   authToggle: document.getElementById("authToggle"),
   authModal: document.getElementById("authModal"),
   authClose: document.getElementById("authClose"),
-  authGoogle: document.getElementById("authGoogle"),
   authEmail: document.getElementById("authEmail"),
   authPassword: document.getElementById("authPassword"),
   authEmailSignIn: document.getElementById("authEmailSignIn"),
@@ -2103,18 +2100,6 @@ function bindEvents() {
     elements.authModal.addEventListener("click", (event) => {
       if (event.target === elements.authModal) {
         closeAuthModal();
-      }
-    });
-  }
-  if (elements.authGoogle) {
-    elements.authGoogle.addEventListener("click", async () => {
-      setAuthStatus("Opening Google sign-in...");
-      try {
-        await signInWithPopup(auth, new GoogleAuthProvider());
-        closeAuthModal();
-      } catch (err) {
-        console.warn("Google sign-in failed", err);
-        setAuthStatus("Google sign-in failed. Check your popup settings and try again.");
       }
     });
   }
