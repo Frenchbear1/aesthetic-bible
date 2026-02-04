@@ -19,6 +19,7 @@ function createWindow() {
     frame: false,
     titleBarStyle: "hidden",
     autoHideMenuBar: true,
+    show: false,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
@@ -29,6 +30,18 @@ function createWindow() {
   mainWindow.loadFile(path.join(__dirname, "desktop", "index.html"));
   normalBounds = mainWindow.getBounds();
   normalMinSize = mainWindow.getMinimumSize();
+
+  mainWindow.once("ready-to-show", () => {
+    mainWindow.show();
+    mainWindow.focus();
+    mainWindow.moveTop();
+    mainWindow.setAlwaysOnTop(true, "screen-saver");
+    setTimeout(() => {
+      if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.setAlwaysOnTop(false);
+      }
+    }, 600);
+  });
 
   mainWindow.on("closed", () => {
     mainWindow = null;
